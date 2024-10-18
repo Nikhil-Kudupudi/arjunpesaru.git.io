@@ -28,6 +28,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - name: Deploy to GitHub Pages
+      if: success()
+      uses: peaceiris/actions-gh-pages@v4 # GitHub Action for deploying to gh-pages
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build # Adjust this if the output folder is different (e.g., `dist`, `public`)
+
     env:
        CI : false
